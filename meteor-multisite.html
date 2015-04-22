@@ -3,12 +3,18 @@
 </head>
 
 <body>
-  <h1>Welcome to Meteor!</h1>
-
-  {{> hello}}
+	<h1>Welcome to Meteor!</h1>
+	<p><a href="http://localhost:3000">Localhost</a> - <a href="http://127.0.0.1:3000">127.0.0.1</a></p>
+	{{> hello}}
 </body>
 
 <template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
+  <h1>{{site.name}}</h1>
+  <button>Insert random post</button>
+  <hr>
+  <ul>
+  {{#each posts}}
+	<li>{{title}}</li>
+  {{/each}}
+  </ul>
 </template>
