@@ -10,6 +10,17 @@ if (Meteor.isClient) {
     Meteor.subscribe("SitePosts-" + site);
   });
 
+  Meteor.startup(function () {
+    $(window).on('focus', function () {
+      Meteor.call('updateSite', site, function (error, result) {
+        console.log("set site to " + site)
+      })
+    }),
+    $(window).on('blur', function () {
+      console.log("left window")
+    })
+  });
+
   Template.hello.helpers({
     site: function () { // get site info for current site
       return Sites.findOne();
@@ -39,6 +50,11 @@ if (Meteor.isServer) {
       Meteor.publish("SitePosts-" + hostname, function () {
         return Posts.find({siteId: siteId});
       });
+    },
+    updateSite: function(hostname) {
+      var site = Sites.find({host: hostname});
+      siteId = site.fetch()[0]._id; 
+      console.log(siteId);
     }
   });
 
