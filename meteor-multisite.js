@@ -46,6 +46,18 @@ if (Meteor.isServer) {
   Posts.deny({
     insert: function (userId, doc) {
       doc.siteId = siteId; // append siteId to document
+      /*
+       * The problem here is siteId will always be the latest you've opened.
+       * If you open http://localhost:3000, then you open http://127.0.0.1:3000
+       * in another tab, siteId will be set to the 127.0.0.1-site and thus not
+       * updating the localhost one correctly.
+       *
+       * The simplest solution would be to set hostname on insert like
+       * Posts.insert({title: site + ' <-> ' + Fake.sentence(5), hostname: site})
+       * but it's not the best of solutions.
+       *
+       * One solution would be to look at focus/blur on the window event
+       */
       return false; // return false to avoid deny
     }
   });
