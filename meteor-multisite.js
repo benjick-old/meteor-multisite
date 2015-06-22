@@ -22,7 +22,7 @@ if (Meteor.isClient) {
   Template.hello.events({
     'click button': function () {
       // insert some fake data
-      Posts.insert({title: Fake.sentence(5)})
+      Posts.insert({title: site + ' <-> ' + Fake.sentence(5)})
     }
   });
 }
